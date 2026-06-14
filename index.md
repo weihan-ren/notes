@@ -1,3 +1,7 @@
+---
+layout: page
+title: Notes
+---
 # 研究索引
 最后更新：2026-06-14
 

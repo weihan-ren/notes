@@ -1,4 +1,5 @@
 ---
+layout: page
 title: "个人研究者系统性学习股市投资：完整路线图"
 created: 2026-06-14
 updated: 2026-06-14

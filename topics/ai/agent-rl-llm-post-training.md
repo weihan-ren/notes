@@ -2,7 +2,7 @@
 layout: page
 title: "Agent RL 与 LLM 后训练基础概念全景"
 created: 2026-06-14
-updated: 2026-06-18
+updated: 2026-06-19
 sources:
   - https://arxiv.org/abs/1706.03741
   - https://arxiv.org/abs/2203.02155
@@ -442,6 +442,69 @@ DeepSeek-R1 使用结构化的输出格式：
 
 ---
 
+### 5.6 Trajectory（轨迹）详解
+
+**轨迹（Trajectory）** 是 RL 中最基础的概念——Agent 与环境完整交互的一条"路径记录"。
+
+#### 形式定义
+
+```
+轨迹 = S₀ → A₀ → R₁ → S₁ → A₁ → R₂ → ... → S_T
+       状态   动作   奖励   状态   动作   奖励     终态
+```
+
+#### Agent RL 中的具体含义
+
+| 场景 | 轨迹是什么 | 长度 |
+|------|-----------|------|
+| **RLHF (PPO)** | 一条完整生成的回答（多 token 序列） | 几十到几百 token |
+| **GRPO（推理 RL）** | 一条完整推理链（`<think>` + `<answer>`） | 几百到几千 token |
+| **Agent RL（工具调用）** | 一轮多步任务（推理 → 工具调用 → 观察 → 推理 → ...） | 多轮对话 |
+| **OmniRL（In-Context RL）** | 在上下文中展示的多步决策序列 | 可达 512K 步 |
+
+#### GRPO 中轨迹的关键作用
+
+GRPO 对同一 prompt 生成 G 条轨迹（如 G=16），然后在群组内归一化奖励：
+
+```
+同一 Prompt: "计算 3x + 5 = 14, x=?"
+  ├── 轨迹 A: Token序列 → 答案"x=3"  → 奖励=1 (正确)
+  ├── 轨迹 B: Token序列 → 答案"x=9"  → 奖励=0 (错误)
+  ├── 轨迹 C: Token序列 → 答案"x=3"  → 奖励=1 (正确)
+  └── ...     (共16条)
+
+优势_i = (奖励_i - mean(奖励_1..G)) / std(奖励_1..G)
+```
+
+**GRPO 只关相对排序**——同组内哪条轨迹更好，不关心绝对分数。
+这正是 RULER（LLM-as-Judge）能工作的原因：Judge 不需要打绝对分，只需要对同组轨迹进行相对排序。
+
+#### ARPO 对轨迹的扩展
+
+传统 GRPO 在**轨迹级别**采样（每条轨迹从 prompt 到 answer 完整生成），但 ARPO 观察到：
+
+```
+传统 GRPO:  全部轨迹级采样
+  Prompt → [整条轨迹A] [整条轨迹B] ...  → 群组归一化 → 更新
+
+ARPO:  混合采样（轨迹级 + 步级）
+  Prompt → 推理 → [工具调用] ← 熵增！
+                         ├── 后续路径X (步级采样)
+                         ├── 后续路径Y (步级采样)
+                         └── 后续路径Z (步级采样)
+  → 高熵步骤上增加探索，低熵步骤保持高效
+```
+
+#### 三个关联概念
+
+| 概念 | 说明 | Agent RL 中的含义 |
+|------|------|------------------|
+| **Trajectory（轨迹）** | 完整交互序列 | 一条完整回答 / 一轮完整任务 |
+| **Step（步）** | 轨迹中的单步 | 生成一个 token / 一次工具调用 |
+| **Group（群组）** | 同一 prompt 的多条轨迹 | GRPO 中 G 条轨迹构成一个 group |
+
+> 详见：[Agent RL 框架生态](agent-rl-frameworks-ecosystem.md) 中 VeRL/OpenRLHF 的具体轨迹处理
+
 ## 6. 其他后训练技术
 
 ### 6.1 宪法 AI（Constitutional AI）
@@ -534,6 +597,10 @@ DeepSeek-R1 使用结构化的输出格式：
 | **优势** | Advantage A(s,a) | "这个动作比平均好/差多少"——比直接使用奖励方差更小 |
 | **推理 token** | Reasoning Tokens | 模型用于内部思考的 token（如 `<think>` 内的内容），不直接贡献最终答案评分 |
 | **Bradley-Terry 模型** | Bradley-Terry Model | 将成对比较转化为概率的统计模型：`P(A≻B) = σ(r_A - r_B)` |
+| **轨迹** | Trajectory | Agent 与环境完整交互的路径记录 = S₀→A₀→R₁→...→S_T。单轮 RL 中是完整生成序列，多轮 Agent RL 中是多步工具调用链。GRPO 在群组内比较轨迹的优劣 |
+| **步** | Step | 轨迹中的单次动作。Token 级 RL 中是生成一个 token，Agent RL 中是一次工具调用。ARPO 在工具调用后的高熵步上增加探索 |
+| **群组** | Group | 同一 prompt 下生成的多条轨迹集合（GRPO 中 G=16 或更大）。群组归一化是 GRPO 省掉 Critic 的关键——只需组内相对优劣 |
+
 | **信任域** | Trust Region | 策略每次更新允许的范围——防止一步走太远毁了整个策略 |
 | **拒绝采样** | Rejection Sampling | 生成多个候选，只保留"正确的"来训练，是 DeepSeek-R1 的关键步骤 |
 
@@ -578,3 +645,5 @@ DeepSeek-R1 使用结构化的输出格式：
 ## 更新记录
 
 - 2026-06-14：初始创建，覆盖 RLHF、DPO、GRPO、Agent RL、后训练技术全景
+
+- 2026-06-19：新增 5.6 Trajectory 详解 + 术语表补充轨迹/步/群组概念

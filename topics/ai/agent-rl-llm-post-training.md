@@ -2,7 +2,7 @@
 layout: page
 title: "Agent RL 与 LLM 后训练基础概念全景"
 created: 2026-06-14
-updated: 2026-06-14
+updated: 2026-06-18
 sources:
   - https://arxiv.org/abs/1706.03741
   - https://arxiv.org/abs/2203.02155
@@ -60,6 +60,7 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 | **RLHF** | 2017-2022 | 训练 Reward Model + PPO 优化 | ✅ 需要 | ✅ 需要 |
 | **DPO** | 2023 | 将 Reward 函数重新参数化为策略比值 | ❌ 不需要 | ❌ 不需要 |
 | **GRPO** | 2024 | 群组相对优势替代 Critic 模型 | ✅ 需要（规则/模型） | 部分简化 |
+| **ARPO** | 2025 | 熵驱动自适应 Rollout（Agent 场景）；GRPO + 经验回放（GUI 场景） | ✅ 需要（规则/模型） | ❌ 不需要 |
 
 **共同目标**：让模型输出符合人类偏好（有帮助、无害、诚实）。
 
@@ -74,6 +75,10 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 - **意义**：降低推理成本、提升推理速度、在消费级硬件上运行强大模型
 
 ---
+
+
+> **详见**：[RLHF 专题笔记](rlhf-reinforcement-learning-from-human-feedback.md) — 三步流程、KL 惩罚机制、奖励欺骗问题及对策
+> **详见**：[PPO 专题笔记](ppo-proximal-policy-optimization.md) — 裁剪机制、GAE 优势估计、Actor-Critic 架构
 
 ## 2. RLHF（基于人类反馈的强化学习）
 
@@ -174,6 +179,9 @@ L_CLIP(θ) = E[min(r_t(θ) × A_t,  clip(r_t(θ), 1-ε, 1+ε) × A_t)]
 
 ## 3. DPO（直接偏好优化）
 
+> **详见**：[DPO 专题笔记](dpo-direct-preference-optimization.md) — 数学等价变换、隐式奖励、DPO 变体家族（IPO/KTO/ORPO/SimPO）
+
+
 ### 3.1 什么是 DPO
 
 DPO 由 Stanford 的 **Rafailov et al. (2023)** 在 *"Direct Preference Optimization: Your Language Model is Secretly a Reward Model"* 中提出。它用一个 **单一的二分类交叉熵损失** 替代了整个 RLHF 三步流程。
@@ -249,6 +257,9 @@ DPO 由 Stanford 的 **Rafailov et al. (2023)** 在 *"Direct Preference Optimiza
 ---
 
 ## 4. GRPO（群组相对策略优化）
+
+> **详见**：[GRPO 专题笔记](grpo-group-relative-policy-optimization.md) — 群组相对优势、DeepSeek-R1 推理涌现、think token 机制
+
 
 ### 4.1 什么是 GRPO
 
@@ -559,6 +570,7 @@ DeepSeek-R1 使用结构化的输出格式：
 • DPO变体（ORPO、SimPO等）继续向更简单更高效的方向演化
 • Agent RL将动作空间从"生成token"扩展到"使用工具"
   → 连接了LLM对齐和Agentic AI两个领域
+• ARPO (2025) 将GRPO的群组相对优势扩展到多轮Agent场景，用熵驱动自适应Rollout解决工具调用后的探索-利用平衡
 ```
 
 ---

@@ -1,0 +1,30 @@
+{% if site.nav_enabled and page.has_toc != false %}
+<nav role="navigation" aria-label="Page outline" id="site-nav">
+  <div class="nav-caption">本页大纲</div>
+  <ul class="nav-list" id="page-toc">
+    <!-- 由 JavaScript 动态生成 -->
+  </ul>
+</nav>
+
+<script>
+(function() {
+  var toc = document.getElementById('page-toc');
+  if (!toc) return;
+  var content = document.querySelector('.main-content');
+  if (!content) return;
+  var headings = content.querySelectorAll('h2[id], h3[id]');
+  var html = '';
+  headings.forEach(function(h) {
+    var indent = h.tagName === 'H3' ? ' nav-list-item-sub' : '';
+    html += '<li class="nav-list-item' + indent + '">';
+    html += '<a href="#' + h.id + '" class="nav-list-link">' + h.textContent + '</a>';
+    html += '</li>';
+  });
+  if (html) {
+    toc.innerHTML = html;
+  } else {
+    toc.innerHTML = '<li class="nav-list-item">(无标题)</li>';
+  }
+})();
+</script>
+{% endif %}

@@ -10,12 +10,28 @@
 (function() {
   var toc = document.getElementById('page-toc');
   if (!toc) return;
-  var content = document.querySelector('.main-content');
-  if (!content) return;
-  var headings = content.querySelectorAll('h2[id], h3[id]');
+  // 尝试找到常见的页面内容容器
+  var selectors = ['.main-content', '.page', '.post', 'article', '.document', '.docs-main', '.entry-content', '.content'];
+  var content = null;
+  for (var i = 0; i < selectors.length; i++) {
+    content = document.querySelector(selectors[i]);
+    if (content) break;
+  }
+  if (!content) content = document.body;
+  var headings = content.querySelectorAll('h2, h3, h4');
   var html = '';
+  function slugify(text) {
+    return text.trim().toLowerCase().replace(/[^\\w\\-\\u4e00-\\u9fa5]+/g, '-').replace(/^-+|-+$/g, '');
+  }
   headings.forEach(function(h) {
-    var indent = h.tagName === 'H3' ? ' nav-list-item-sub' : '';
+    if (!h.id) {
+      var base = slugify(h.textContent || h.innerText || 'heading');
+      var id = base || 'heading';
+      var idx = 1;
+      while (document.getElementById(id)) { id = base + '-' + idx++; }
+      h.id = id;
+    }
+    var indent = (h.tagName === 'H3' || h.tagName === 'H4') ? ' nav-list-item-sub' : '';
     html += '<li class="nav-list-item' + indent + '">';
     html += '<a href="#' + h.id + '" class="nav-list-link">' + h.textContent + '</a>';
     html += '</li>';

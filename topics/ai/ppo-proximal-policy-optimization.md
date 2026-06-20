@@ -1,6 +1,5 @@
 ---
 title: "PPO（Proximal Policy Optimization）详解"
-nav_order: 13
 has_toc: true
 created: 2026-06-18
 updated: 2026-06-18

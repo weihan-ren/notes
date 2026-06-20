@@ -2,11 +2,10 @@ title: Research Notes
 description: AI · Development · Finance Knowledge Base
 remote_theme: just-the-docs/just-the-docs
 
-# 侧边栏导航
-nav_enabled: true
-nav_sort: case_insensitive
+# 侧边栏：关闭全站导航，使用页面内 TOC
+nav_enabled: false
 
-# 页面内大纲（右侧/嵌入式）
+# 标题锚点
 heading_anchors: true
 
 # 搜索
@@ -15,31 +14,28 @@ search:
   heading_level: 2
   previews: 3
 
-# 页面内 TOC（自动生成标题链接）
+# 页面内 TOC — 每页自动生成当前页大纲
 toc_enabled: true
 toc:
   min_level: 2
-  max_level: 4
+  max_level: 3
 
-# 启用集合（按目录自动组织）
+# 启用集合
 collections:
   topics:
     output: true
     permalink: "/:collection/:path/"
 
-# 顶部导航折叠
-nav_fold: true
-
 # 颜色方案
 color_scheme: light
 
-# 辅助功能
+# 辅助链接
 aux_links:
-  "GitHub":
-    - "https://github.com/weihan-ren/notes"
+  "← 返回索引":
+    - "/"
 
 # 页脚
-footer_content: "Powered by <a href=\"https://just-the-docs.com\">Just the Docs</a>"
+footer_content: ""
 
 # 排除文件
 exclude:

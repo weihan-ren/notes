@@ -1,5 +1,7 @@
 ---
 title: "ARPO（Agentic Reinforced Policy Optimization）详解"
+nav_order: 16
+has_toc: true
 created: 2026-06-18
 updated: 2026-06-18
 sources:

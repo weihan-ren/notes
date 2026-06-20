@@ -1,5 +1,7 @@
 ---
 title: "DPO（Direct Preference Optimization）详解"
+nav_order: 14
+has_toc: true
 created: 2026-06-18
 updated: 2026-06-18
 sources:

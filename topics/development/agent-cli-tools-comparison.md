@@ -1,5 +1,7 @@
 ---
 title: "主流 Agent CLI 工具深度对比分析（2026）"
+nav_order: 20
+has_toc: true
 created: 2026-06-18
 updated: 2026-06-18
 sources:

@@ -1,5 +1,7 @@
 ---
 title: "个人研究者系统性学习股市投资：完整路线图"
+nav_order: 30
+has_toc: true
 created: 2026-06-14
 updated: 2026-06-14
 sources:

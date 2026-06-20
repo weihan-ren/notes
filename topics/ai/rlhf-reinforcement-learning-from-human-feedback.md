@@ -1,5 +1,7 @@
 ---
 title: "RLHF（Reinforcement Learning from Human Feedback）详解"
+nav_order: 12
+has_toc: true
 created: 2026-06-18
 updated: 2026-06-18
 sources:

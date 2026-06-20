@@ -1,5 +1,7 @@
 ---
 title: "Agent RL 与 LLM 后训练基础概念全景"
+nav_order: 11
+has_toc: true
 created: 2026-06-14
 updated: 2026-06-19
 sources:

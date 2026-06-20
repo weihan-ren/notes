@@ -7,6 +7,9 @@ sources:
   - https://arxiv.org/abs/2310.12036
   - https://arxiv.org/abs/2402.01306
   - https://arxiv.org/abs/2305.18290
+  - https://arxiv.org/abs/2310.12036
+  - https://arxiv.org/abs/2402.01306
+  - https://arxiv.org/abs/2305.18290
 tags: [DPO, RLHF, Alignment, LLM, PostTraining, Preference-Learning]
 category: ai
 ---

@@ -6,6 +6,9 @@ sources:
   - https://arxiv.org/abs/2507.19849
   - https://arxiv.org/abs/2505.16282
   - https://arxiv.org/abs/2603.00526
+  - https://arxiv.org/abs/2507.19849
+  - https://arxiv.org/abs/2505.16282
+  - https://arxiv.org/abs/2603.00526
   - https://arxiv.org/abs/2512.01228
   - https://arxiv.org/abs/2308.15550
   - https://github.com/dongguanting/ARPO

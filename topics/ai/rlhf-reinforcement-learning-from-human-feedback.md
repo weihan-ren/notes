@@ -6,6 +6,9 @@ sources:
   - https://arxiv.org/abs/1706.03741
   - https://arxiv.org/abs/2203.02155
   - https://arxiv.org/abs/1909.08593
+  - https://arxiv.org/abs/1706.03741
+  - https://arxiv.org/abs/2203.02155
+  - https://arxiv.org/abs/1909.08593
   - https://arxiv.org/abs/2009.01325
 tags: [RLHF, PPO, Reward-Model, Alignment, LLM, PostTraining]
 category: ai

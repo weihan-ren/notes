@@ -1,8 +1,11 @@
 ---
-layout: page
 title: "个人研究者系统性学习股市投资：完整路线图"
 created: 2026-06-14
 updated: 2026-06-14
+sources:
+  - https://www.investopedia.com/
+  - https://www.tradingview.com/
+  - https://finance.yahoo.com/
 sources:
   - https://www.cfainstitute.org/programs/investment-foundations-certificate
   - https://www.coursera.org/learn/financial-markets-global

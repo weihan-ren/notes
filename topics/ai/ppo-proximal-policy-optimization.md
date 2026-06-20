@@ -5,6 +5,9 @@ updated: 2026-06-18
 sources:
   - https://arxiv.org/abs/1707.06347
   - https://arxiv.org/abs/1506.02438
+  - https://spinningup.openai.com/en/latest/algorithms/ppo.html
+  - https://arxiv.org/abs/1707.06347
+  - https://arxiv.org/abs/1506.02438
   - https://arxiv.org/abs/2203.02155
   - https://spinningup.openai.com/en/latest/algorithms/ppo.html
 tags: [PPO, TRPO, GAE, RL, RLHF, PolicyGradient]

@@ -5,6 +5,8 @@ updated: 2026-06-18
 sources:
   - https://arxiv.org/abs/2402.03300
   - https://arxiv.org/abs/2501.12948
+  - https://arxiv.org/abs/2402.03300
+  - https://arxiv.org/abs/2501.12948
   - https://arxiv.org/abs/2507.19849
 tags: [GRPO, DeepSeek, R1, DeepSeekMath, LLM, PostTraining, RL]
 category: ai

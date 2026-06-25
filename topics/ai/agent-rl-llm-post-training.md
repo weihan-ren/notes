@@ -137,6 +137,9 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 
 [arXiv:2402.03300](https://arxiv.org/abs/2402.03300) (DeepSeekMath) · [arXiv:2501.12948](https://arxiv.org/abs/2501.12948) (DeepSeek-R1)
 
+**2026 演进 — Tree-GRPO**：从扁平轨迹采样转向树结构搜索，在中间步骤分叉获取步级奖励信号。代表变体：CATPO（树质量筛选）、IB-TPO（ICML 2026，信息瓶颈驱动）、InfoTree（子模块优化）、ATPO（ICLR 2026，自适应预算）。详见 [Tree-GRPO 专题](tree-grpo-tree-based-policy-optimization.md)
+
+
 ---
 ---
 

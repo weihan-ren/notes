@@ -1,1 +1,27 @@
-<!-- clear -->
+<style>
+/* 将搜索框固定在侧边栏中 */
+.search {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  padding: 0.5rem 1rem !important;
+  background: #fff !important;
+  border-bottom: 1px solid #eee !important;
+}
+
+/* 侧边栏内搜索框样式微调 */
+.side-bar .search {
+  margin: 0 !important;
+}
+
+/* 如果搜索不在侧边栏内，也保持可见 */
+.main-content-wrap > .search,
+.main > .search {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  background: #fff !important;
+  border-bottom: 1px solid #eee !important;
+  padding: 0.5rem 1rem !important;
+}
+</style>

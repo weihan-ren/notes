@@ -15,7 +15,7 @@ nav_external_links:
 heading_anchors: true
 
 # 搜索
-search_enabled: false
+search_enabled: true
 
 # 页面内 TOC
 toc_enabled: true

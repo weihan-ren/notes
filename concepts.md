@@ -113,3 +113,62 @@ has_toc: true
 | AReaL | [2505.24298](https://arxiv.org/abs/2505.24298) |
 | VeRL (EuroSys 2025) | [2409.19256](https://arxiv.org/abs/2409.19256) |
 | Constitutional AI | [2212.08073](https://arxiv.org/abs/2212.08073) |
+
+## 推理后端
+
+LLM 训练框架（VeRL/OpenRLHF/AReaL/TRL）在 Rollout 阶段依赖的生成引擎。
+
+| 引擎 | 开发者 | 核心技术 | 特点 |
+|------|--------|---------|------|
+| **vLLM** | UC Berkeley | PagedAttention | 开源社区标准，吞吐最高，Prefix Caching 对 GRPO 极关键 |
+| **SGLang** | Stanford/LMSys | RadixAttention | DP Attention 支持，多轮 Agent RL 优化，VeRL/AReaL 主力后端 |
+| **TensorRT-LLM** | NVIDIA | TensorRT 图优化 + FP8/INT4 | H100/B200 上性能极致，NeMo-Aligner/Scaffoldings 专用 |
+| **TGI** | HuggingFace | 简单部署 | 与 HF 生态集成好，Function Calling 支持 |
+| **Ollama** | 社区 | llama.cpp 封装 | 本地一键部署，消费级 GPU/Mac 友好 |
+| **llama.cpp** | ggerganov | GGUF 量化 + CPU/GPU 混合 | 资源受限设备，非企业场景 |
+
+**训练框架的推理后端选择**：
+
+| 训练框架 | 默认推理后端 | 可选 |
+|---------|:----------:|------|
+| VeRL | vLLM | SGLang |
+| OpenRLHF | vLLM | - |
+| AReaL | SGLang | vLLM |
+| TRL | HF Transformers | vLLM |
+| NeMo-Aligner | TensorRT-LLM | - |
+
+## 训练后端
+
+LLM 训练和大规模分布式训练的基础设施。
+
+| 后端 | 开发者 | 核心技术 | 最大模型 | 特点 |
+|------|--------|---------|:------:|------|
+| **DeepSpeed ZeRO** | Microsoft | ZeRO-1/2/3 分片优化 | 70B+ | 最早成熟的分布式训练方案，OpenRLHF 主力 |
+| **FSDP / FSDP2** | PyTorch | 分片数据并行 (v1) / per-param 分片 (v2) | 70B+ | PyTorch 原生，FSDP2 内存效率更好，VeRL/TRL 推荐 |
+| **Megatron-LM** | NVIDIA | TP + PP + CP + EP 全并行 | **万亿级** | 唯一支持万亿参数模型的方案，VeRL/NeMo 使用 |
+| **PyTorch DDP** | PyTorch | 数据并行 | 7B | 最简单，适合小模型和实验 |
+| **PyTorch Archon** | 社区 | FSDP2 + PP + EP | 100B+ | AReaL 专用，组合多种并行策略 |
+
+**训练框架的后端选择**：
+
+| 训练框架 | 默认训练后端 | 特点 |
+|---------|:----------:|------|
+| VeRL | FSDP / FSDP2 / Megatron | 三选一，Megatron 支持 MoE |
+| OpenRLHF | DeepSpeed ZeRO | 最早成熟的方案 |
+| AReaL | FSDP2 / Megatron / Archon | 三选一 |
+| TRL | Accelerate (DDP/DeepSpeed/FSDP) | 自动选择 |
+| NeMo-Aligner | Megatron-LM | NVIDIA 原生 |
+
+## 推理 vs 训练：关键区别
+
+| | 推理后端 | 训练后端 |
+|---|---|---|
+| **方向** | 前向传播（生成） | 前向 + 反向（梯度更新） |
+| **核心优化** | KV Cache 管理、批处理 | 梯度分片、通信优化 |
+| **显存瓶颈** | KV Cache（随序列长度线性增长） | 模型参数 + 优化器状态 + 激活值 |
+| **RL 训练中用时占比** | **~80%** (瓶颈在此) | ~20% |
+| **代表** | vLLM, SGLang | DeepSpeed, FSDP, Megatron |
+
+---
+
+> 更新：2026-06-26 — 新增推理后端和训练后端章节

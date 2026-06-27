@@ -1,17 +1,32 @@
 <style>
-/* 确保搜索栏始终可见——跟随滚动固定在顶部 */
-div.search,
-.search-wrap,
-.main-content-wrap .search,
-.main .search {
+/* 搜索框在侧边栏内时清除边框 */
+.side-bar .search {
+  border-bottom: none !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* 搜索框粘性定位 */
+.search {
   position: -webkit-sticky !important;
   position: sticky !important;
   top: 0 !important;
-  z-index: 999 !important;
+  z-index: 100 !important;
   background: #fff !important;
-  padding: 0.5rem 1rem !important;
-  margin: 0 !important;
-  border-bottom: 1px solid #e0e0e0 !important;
-  width: 100% !important;
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 将搜索框移到侧边栏中（保持搜索框始终可见）
+  var sidebar = document.querySelector('.side-bar');
+  var search = document.querySelector('.search');
+  if (sidebar && search && !sidebar.contains(search)) {
+    var nav = sidebar.querySelector('nav');
+    if (nav) {
+      nav.parentNode.insertBefore(search, nav);
+    } else {
+      sidebar.appendChild(search);
+    }
+  }
+});
+</script>

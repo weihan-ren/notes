@@ -1,17 +1,25 @@
-{% if site.nav_enabled and page.has_toc != false %}
+{% if site.search.enabled or site.search_enabled %}
+<div class="search" role="search">
+  <div class="search-input-wrap">
+    <input type="text" id="search-input" class="search-input" tabindex="0" placeholder="搜索知识库..." aria-label="搜索知识库" autocomplete="off">
+    <label for="search-input" class="search-label">
+      <svg viewBox="0 0 24 24" class="search-icon"><use xlink:href="#svg-search"></use></svg>
+    </label>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
+{% endif %}
+
 <nav role="navigation" aria-label="Page outline" id="site-nav">
   <div class="nav-caption">本页大纲</div>
-  <ul class="nav-list" id="page-toc">
-    <!-- 由 JavaScript 动态生成 -->
-  </ul>
+  <ul class="nav-list" id="page-toc"><li class="nav-list-item">加载中...</li></ul>
 </nav>
 
 <script>
 (function() {
   var toc = document.getElementById('page-toc');
   if (!toc) return;
-  // 尝试找到常见的页面内容容器
-  var selectors = ['.main-content', '.page', '.post', 'article', '.document', '.docs-main', '.entry-content', '.content'];
+  var selectors = ['.main-content', '.page', 'article', '.content', '#main-content'];
   var content = null;
   for (var i = 0; i < selectors.length; i++) {
     content = document.querySelector(selectors[i]);
@@ -20,27 +28,17 @@
   if (!content) content = document.body;
   var headings = content.querySelectorAll('h2, h3, h4');
   var html = '';
-  function slugify(text) {
-    return text.trim().toLowerCase().replace(/[^\\w\\-\\u4e00-\\u9fa5]+/g, '-').replace(/^-+|-+$/g, '');
-  }
   headings.forEach(function(h) {
     if (!h.id) {
-      var base = slugify(h.textContent || h.innerText || 'heading');
-      var id = base || 'heading';
-      var idx = 1;
-      while (document.getElementById(id)) { id = base + '-' + idx++; }
+      var base = h.textContent.trim().toLowerCase().replace(/[^\\w\\-\u4e00-\u9fa5]+/g, '-').replace(/^-+|-+$/g, '');
+      var id = base || 'h';
+      var idx = 1, orig = id;
+      while (document.getElementById(id)) { id = orig + '-' + idx++; }
       h.id = id;
     }
     var indent = (h.tagName === 'H3' || h.tagName === 'H4') ? ' nav-list-item-sub' : '';
-    html += '<li class="nav-list-item' + indent + '">';
-    html += '<a href="#' + h.id + '" class="nav-list-link">' + h.textContent + '</a>';
-    html += '</li>';
+    html += '<li class="nav-list-item' + indent + '"><a href="#' + h.id + '" class="nav-list-link">' + h.textContent + '</a></li>';
   });
-  if (html) {
-    toc.innerHTML = html;
-  } else {
-    toc.innerHTML = '<li class="nav-list-item">(无标题)</li>';
-  }
+  toc.innerHTML = html || '<li class="nav-list-item">(无标题)</li>';
 })();
 </script>
-{% endif %}

@@ -4,24 +4,23 @@ remote_theme: just-the-docs/just-the-docs
 baseurl: "/notes"
 url: "https://weihan-ren.github.io"
 
-# 侧边栏：保留框架但内容为空（页面 TOC 作为实际导航）
+# 侧边栏导航
 nav_enabled: true
-nav_external_links:
-  - title: 返回索引
-    url: /
-    hide_icon: true
 
 # 标题锚点
 heading_anchors: true
-
-# 搜索
-search_enabled: true
 
 # 页面内 TOC
 toc_enabled: true
 toc:
   min_level: 2
   max_level: 3
+
+# 搜索（必须独立配置块）
+search:
+  enabled: true
+  heading_level: 2
+  previews: 3
 
 # 颜色方案
 color_scheme: light

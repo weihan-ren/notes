@@ -1,4 +1,9 @@
 <style>
+/* 侧边栏 z-index 必须高于 .main 中的 search-overlay（z-index: 1），否则搜索结果被遮罩拦截点击 */
+.side-bar {
+  z-index: 2;
+}
+
 /* 侧边栏 sticky 头部：站点标题 + 搜索，滚动导航列表时保持可见 */
 .side-bar-sticky-header {
   position: sticky;

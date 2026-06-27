@@ -7,7 +7,7 @@ nav_exclude: true
 
 最后更新：2026-06-26
 
-🔍 右上角搜索框可全文检索 | 📖 [概念字典]({{ site.baseurl }}/concepts.html)
+🔍 左侧边栏搜索框可全文检索 | 📖 [概念字典]({{ site.baseurl }}/concepts.html)
 
 ## AI — LLM 后训练与 Agent RL
 - [概念全景]({{ site.baseurl }}/topics/ai/agent-rl-llm-post-training.html)

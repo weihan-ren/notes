@@ -1,0 +1,33 @@
+{%- comment -%}
+  覆盖 just-the-docs 侧边栏：
+  - 将 site-header 和搜索包装为 sticky 容器，滚动导航时保持可见
+  - 搜索位于导航上方，始终可访问
+{%- endcomment -%}
+
+<header class="side-bar">
+  <div class="side-bar-sticky-header">
+    <div class="site-header">
+      <a href="{{ '/' | relative_url }}" class="site-title lh-tight">{% include title.html %}</a>
+      <button id="menu-button" class="site-button btn-reset" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><use xlink:href="#svg-menu"></use></svg>
+      </button>
+    </div>
+
+    {% if site.search_enabled != false %}
+      {% include components/search_header.html %}
+    {% endif %}
+  </div>
+
+  {% include_cached components/site_nav.html %}
+
+  <div class="d-md-block d-none site-footer">
+  {% capture nav_footer_custom %}
+    {%- include nav_footer_custom.html -%}
+  {% endcapture %}
+  {% if nav_footer_custom != "" %}
+    {{ nav_footer_custom }}
+  {% else %}
+    This site uses <a href="https://github.com/just-the-docs/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.
+  {% endif %}
+  </div>
+</header>

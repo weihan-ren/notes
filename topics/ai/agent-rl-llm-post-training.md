@@ -90,9 +90,6 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 
 ## 2. RLHF（基于人类反馈的强化学习）
 
-> **详见**：[RLHF 专题笔记](rlhf-reinforcement-learning-from-human-feedback.md) — 三步流程、KL 惩罚机制、奖励欺骗问题及对策
-> **详见**：[PPO 专题笔记](ppo-proximal-policy-optimization.md) — 裁剪机制、GAE 优势估计、Actor-Critic 架构
-
 **一句话**：RLHF 是 LLM 对齐的经典范式——训练 Reward Model 替代人类打分 + PPO 强化学习优化 + KL 惩罚防止跑偏。
 
 **三步流程**：SFT（学格式）→ 训练 RM（学偏好）→ PPO 优化（对齐偏好）。经典问题是奖励欺骗和 KL 惩罚权衡。PPO 需要 4 个模型同时驻留 GPU（策略+参考+RM+价值），这是 DPO 和 GRPO 诞生的主要动机。
@@ -102,9 +99,6 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 [arXiv:2203.02155](https://arxiv.org/abs/2203.02155) · [arXiv:1706.03741](https://arxiv.org/abs/1706.03741)
 
 ---
-## 3. DPO（直接偏好优化）
-
-> **详见**：[DPO 专题笔记](dpo-direct-preference-optimization.md) — 数学等价变换、隐式奖励、DPO 变体家族（IPO/KTO/ORPO/SimPO）
 ## 3. DPO（直接偏好优化）
 
 > **详见**：[DPO 专题笔记](dpo-direct-preference-optimization.md) — 数学等价变换、隐式奖励、DPO 变体家族（IPO/KTO/ORPO/SimPO）
@@ -120,9 +114,6 @@ LLM 的完整训练分为四大阶段，每个阶段解决不同的问题：
 [arXiv:2305.18290](https://arxiv.org/abs/2305.18290)
 
 ---
-## 4. GRPO（群组相对策略优化）
-
-> **详见**：[GRPO 专题笔记](grpo-group-relative-policy-optimization.md) — 群组相对优势、DeepSeek-R1 推理涌现、think token 机制
 ## 4. GRPO（群组相对策略优化）
 
 > **详见**：[GRPO 专题笔记](grpo-group-relative-policy-optimization.md) — 群组相对优势、DeepSeek-R1 推理涌现、think token 机制

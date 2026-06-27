@@ -1,0 +1,23 @@
+// 搜索栏固定在页面顶部，随滚动保持可见
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+// 搜索框更醒目
+.search-input {
+  transition: border-color 0.2s;
+}
+.search-input:focus {
+  border-color: #7253ed;
+}
+
+// 页面大纲( TOC) 列出在当前页侧边栏
+#page-toc .nav-list-link {
+  font-size: 0.85rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+}

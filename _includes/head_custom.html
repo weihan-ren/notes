@@ -1,10 +1,21 @@
 <style>
 /* 搜索栏固定在页面顶部 */
-.site-header {
+.main-header,
+.site-header,
+header[role="banner"] {
   position: sticky !important;
   top: 0 !important;
   z-index: 100 !important;
   background: #fff !important;
   box-shadow: 0 1px 4px rgba(0,0,0,0.08) !important;
+}
+
+/* 搜索输入框容器 */
+.search,
+.search-input-wrap,
+#search-input-wrap {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 101 !important;
 }
 </style>

@@ -5,7 +5,7 @@ nav_exclude: true
 
 # 研究索引
 
-最后更新：2026-06-26
+最后更新：2026-06-27
 
 🔍 左侧边栏搜索框可全文检索 | 📖 [概念字典]({{ site.baseurl }}/concepts.html)
 
@@ -22,6 +22,7 @@ nav_exclude: true
 
 ## 开发工具
 - [Agent CLI 工具对比]({{ site.baseurl }}/topics/development/agent-cli-tools-comparison.html)
+- [Hydra 与 Ray Python 库详解]({{ site.baseurl }}/topics/development/hydra-ray-python-libraries.html)
 - [Chat Completions API]({{ site.baseurl }}/topics/development/chat-completions-api.html)
 
 ## 金融投资

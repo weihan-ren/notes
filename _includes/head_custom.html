@@ -10,14 +10,13 @@
   top: 0;
   z-index: 10;
   background: #fff;
-  padding-bottom: 0.375rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid #eeebee;
 }
 
-/* 强制覆盖主题默认搜索容器高度 */
+/* 覆盖主题默认大尺寸搜索容器 */
 .side-bar .search {
   height: auto !important;
-  min-height: unset;
 }
 
 /* 解除 search-input-wrap 的绝对定位，让 input 自然撑开容器 */
@@ -45,7 +44,7 @@
   box-shadow: 0 0 0 2px rgba(114, 83, 237, 0.15);
 }
 
-/* 搜索图标 — 定位在输入框内部左侧，高度紧随 input */
+/* 搜索图标 — 定位在输入框内部左侧 */
 .side-bar .search-label {
   height: auto !important;
   position: absolute;
@@ -53,7 +52,6 @@
   left: 0.625rem;
   display: flex;
   align-items: center;
-  bottom: auto;
 }
 
 .side-bar .search-icon {

@@ -94,6 +94,21 @@ function searchKB(term) {
 | Hallucination | 模型生成看似合理但事实错误的内容 | [🔍](javascript:searchKB('幻觉 Hallucination')) |
 | Temperature | 控制输出随机性（0=确定,1=随机） | [🔍](javascript:searchKB('Temperature 温度')) |
 
+
+## 深度学习框架
+
+LLM 训练和推理的底层通用框架（区别于专门的训练分布式方案和推理引擎）。
+
+| 框架 | 厂商 | 核心技术 | 芯片适配 |
+|------|------|---------|---------|
+| **PyTorch** | Meta | 动态图，社区最大 | NVIDIA CUDA 原生 |
+| **MindSpore** | 华为 | 源码转换自动微分，自动并行 | **Ascend NPU 原生** |
+| **JAX** | Google | 函数式+XLA 编译 | TPU 原生 |
+| **PaddlePaddle** | 百度 | 动静统一，产业模型库 | 昆仑芯原生 |
+| **TensorFlow** | Google | 静态图，TF Serving | TPU/GPU/CPU |
+
+> 层次关系：PyTorch/MindSpore/JAX（DL 框架）→ DeepSpeed/FSDP/Megatron（训练分布式）→ vLLM/SGLang（推理引擎）
+
 ## 推理后端
 
 | 引擎 | 开发者 | 核心技术 | 特点 | 搜索 |

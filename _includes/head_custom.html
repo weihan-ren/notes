@@ -14,17 +14,17 @@
   border-bottom: 1px solid #eeebee;
 }
 
-/* 侧边栏搜索容器 — 覆盖主题的固定高度和绝对定位 */
+/* 覆盖主题默认大尺寸搜索容器（height: 4rem）*/
 .side-bar .search {
-  position: relative;
   height: auto;
 }
 
+/* 解除 search-input-wrap 的绝对定位，让 input 自然撑开容器 */
 .side-bar .search-input-wrap {
-  position: static;
+  position: static !important;
 }
 
-/* 侧边栏搜索输入框 — 精简尺寸 */
+/* 侧边栏搜索输入框 */
 .side-bar .search-input {
   width: 100%;
   height: auto;
@@ -44,16 +44,14 @@
   box-shadow: 0 0 0 2px rgba(114, 83, 237, 0.15);
 }
 
-/* 搜索图标 — 定位在输入框内部左侧 */
+/* 搜索图标 — 紧贴输入框，高度与 input 一致 */
 .side-bar .search-label {
+  height: auto;
   position: absolute;
-  top: 0;
+  top: 0.3rem;
   left: 0.625rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-  padding: 0;
 }
 
 .side-bar .search-icon {

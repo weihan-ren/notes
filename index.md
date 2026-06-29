@@ -5,7 +5,7 @@ nav_exclude: true
 
 # 研究索引
 
-最后更新：2026-06-27
+最后更新：2026-06-29
 
 🔍 左侧边栏搜索框可全文检索 | 📖 [概念字典]({{ site.baseurl }}/concepts.html)
 
@@ -43,6 +43,9 @@ nav_exclude: true
 
 ### Python 生态
 - [Hydra 与 Ray 详解]({{ site.baseurl }}/topics/development/hydra-ray-python-libraries.html) — 配置管理 + 分布式计算，ML 技术栈全景分析
+
+### Agent 构建框架
+- [Agent 构建框架对比]({{ site.baseurl }}/topics/development/agent-build-frameworks.html) — smolagents、CrewAI、OpenAI SDK、AutoGen、rLLM
 
 ### Agent CLI
 - [Agent CLI 工具对比]({{ site.baseurl }}/topics/development/agent-cli-tools-comparison.html) — Claude Code、Codex、Opencode 等深度对比

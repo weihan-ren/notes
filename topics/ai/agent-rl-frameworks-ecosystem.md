@@ -2,7 +2,7 @@
 title: "Agent RL 训练框架与工具生态全景（2026）"
 has_toc: true
 created: 2026-06-18
-updated: 2026-06-18
+updated: 2026-06-29
 sources:
   - https://github.com/verl-project/verl
   - https://arxiv.org/abs/2409.19256
@@ -11,7 +11,7 @@ sources:
   - https://github.com/OpenPipe/ART
   - https://blog.dailydoseofds.com/p/how-top-ai-labs-are-building-rl-agents
   - https://github.com/hiyouga/EasyR1
-tags: [Agent-RL, VeRL, OpenRLHF, TRL, GRPO, PPO, RLHF, PostTraining, ART, NeMo]
+tags: [Agent-RL, VeRL, OpenRLHF, TRL, GRPO, PPO, RLHF, PostTraining, ART, NeMo, AReaL, rLLM, ASystem]
 category: ai
 ---
 
@@ -19,7 +19,7 @@ category: ai
 
 ## 摘要
 
-2025-2026 年 LLM 后训练 RL 框架经历了爆发式增长。从 DeepSeek-R1 用 GRPO+RLVR 让推理能力涌现开始，RL 训练框架从"只有大厂用得起"变成开源社区的标配。本文深度剖析 VeRL、OpenRLHF、TRL、ART(RULER)、NeMo-Aligner、DeepSpeed-Chat 等框架的架构设计、核心差异和生态位。
+2025-2026 年 LLM 后训练 RL 框架经历了爆发式增长。从 DeepSeek-R1 用 GRPO+RLVR 让推理能力涌现开始，RL 训练框架从"只有大厂用得起"变成开源社区的标配。本文深度剖析 VeRL、OpenRLHF、TRL、ART(RULER)、NeMo-Aligner、DeepSpeed-Chat、AReaL（蚂蚁异步 RL）、rLLM（UC Berkeley Agent RL）、ASystem（蚂蚁 Agent 平台）等框架的架构设计、核心差异和生态位。
 
 ---
 
@@ -34,6 +34,8 @@ category: ai
 | **TRL** | HuggingFace 的 Transformers RL 库 | 不是算法 |
 | **ART+RULER** | Agent 场景 RL 框架 + LLM-as-Judge 通用奖励 | RULER 不是框架 |
 | **OmniRL** | In-Context RL 模型（推理时学习，无需参数更新） | 不是训练框架 |
+| **AReaL** | 蚂蚁/清华完全异步 RL 训练系统，5.3K⭐ | 不是算法 |
+| **rLLM** | UC Berkeley Agent RL 框架，不改 Agent 代码做 RL | 不是算法 |
 
 ---
 
@@ -338,6 +340,73 @@ judged = await ruler_score_group(group, "openai/o3",
 - 完整的 SFT → RM → PPO 三阶段
 - 但更新较慢，社区活跃度不如 VeRL/OpenRLHF
 
+
+---
+
+## 7.5 AReaL — 蚂蚁/清华异步 RL 系统
+
+| 项目 | 详情 |
+|------|------|
+| **GitHub** | [areal-project/AReaL](https://github.com/areal-project/AReaL) |
+| **Stars** | 5.3K+ |
+| **论文** | [arXiv:2505.24298](https://arxiv.org/abs/2505.24298) |
+| **定位** | 大规模异步 RL 训练系统，完全解耦 Rollout 和 Train |
+
+**核心创新**：完全异步架构——生成和训练彻底解耦，比同步系统快 **2.77 倍**。
+
+```
+传统同步:  Rollout → 等待完成 → Train → Rollout → ...（GPU 空闲等待）
+AReaL 异步:  Rollout 流 ──→ 持续产生轨迹
+             Train 流  ──→ 持续消费轨迹更新   （GPU 始终繁忙）
+```
+
+**特点**：
+- 支持 13 种 RL 算法（GRPO/PPO/ARPO 等）、3 种训练后端、2 种推理引擎
+- Megatron-LM / FSDP2 / Archon 训练后端可切换
+- vLLM / SGLang 推理引擎可切换
+- 蚂蚁 + 清华 IIIS 联合开发
+
+> 详见 [AReaL 专题笔记](areal-asynchronous-rl-system-ant-group.md)
+
+---
+
+## 7.6 rLLM — UC Berkeley Agent RL 框架
+
+| 项目 | 详情 |
+|------|------|
+| **GitHub** | [rllm-org/rllm](https://github.com/rllm-org/rllm) |
+| **Stars** | 5.7K+ |
+| **定位** | 不改 Agent 代码直接做 RL 训练 |
+
+**核心创新**：Agent 代码零改动，rLLM 的 Model Gateway 自动拦截 LLM 调用，采集轨迹→打分→更新模型。
+
+```
+你的 Agent → rLLM Model Gateway（透明代理，自动采集 token IDs + logprobs）
+              → 你的 Reward 函数 → GRPO/REINFORCE 更新模型
+```
+
+**特点**：
+- 任意 harness：Claude Code、Codex、Terminus-2 等 10+ CLI
+- 多后端：verl（分布式）、tinker（单机）、fireworks，一键切换
+- 60+ 基准集成
+- 明星成果：DeepScaleR-1.5B（超 O1-preview）、DeepCoder-14B（O3-mini 级）
+
+> 详见 [Agent 构建框架对比](../development/agent-build-frameworks.md) 中 rLLM 章节
+
+---
+
+## 7.7 ASystem — 蚂蚁 Agent 平台（含 AReaL）
+
+| 项目 | 详情 |
+|------|------|
+| **GitHub** | [inclusionAI](https://github.com/inclusionAI) |
+| **定位** | 蚂蚁 inclusionAI 开源的 Agentic AI 平台 |
+
+ASystem 是 AReaL 的上层平台，核心理念 "Everything as Environment"。旗下包含 AReaL（RL 训练）、AEnvironment（环境平台）、ASearcher（搜索 Agent）、AWorld（世界模拟）等组件。
+
+> ASystem 是平台，不是 RL 训练框架本身。其 RL 训练能力由 AReaL 提供。详见 [ASystem 专题笔记](asystem-ant-group-agent-platform.md)
+
+
 ---
 
 ## 8. 其他值得关注的框架
@@ -373,6 +442,12 @@ judged = await ruler_score_group(group, "openai/o3",
 │   ├── 快速上手 → Easy-R1
 │   └── 大规模 → VeRL-Omni / OpenRLHF VLM
 │
+├── 需要异步 RL 训练（最大化 GPU 利用率）
+│   └── AReaL（完全异步架构，2.77× 加速）
+│
+├── 已有 Agent 代码，想直接 RL 训练
+│   └── rLLM（零代码改动接入）
+│
 └── NVIDIA GPU 集群，万亿参数
     └── NeMo-Aligner
 ```
@@ -402,4 +477,5 @@ DeepSpeed   TRL        REINFORCE++  Easy-R1       VeRL-Omni
 
 ## 更新记录
 
+- 2026-06-29：新增 AReaL、rLLM、ASystem，更新选型决策树和演进时间线
 - 2026-06-18：初始创建，覆盖 VeRL、OpenRLHF、TRL、ART(RULER)、NeMo-Aligner、DeepSpeed-Chat 等主流框架的深度剖析

@@ -33,6 +33,9 @@ nav_exclude: true
 ### 模型架构
 - [MoE 混合专家模型详解]({{ site.baseurl }}/topics/ai/moe-mixture-of-experts.html) — 稀疏激活、路由机制、负载均衡、与 GRPO 的冲突
 
+### MoE 训练稳定性
+- [R3 Rollout Routing Replay]({{ site.baseurl }}/topics/ai/r3-rollout-routing-replay.html) — 记录推理路由、训练时重放，解决 MoE RL 崩溃
+
 ### 树搜索优化
 - [Tree-GRPO]({{ site.baseurl }}/topics/ai/tree-grpo-tree-based-policy-optimization.html) — 基于树搜索的策略优化：CATPO、IB-TPO、InfoTree、ATPO
 

@@ -5,7 +5,7 @@ nav_exclude: true
 
 # 研究索引
 
-最后更新：2026-06-29
+最后更新：2026-06-30
 
 🔍 左侧边栏搜索框可全文检索 | 📖 [概念字典]({{ site.baseurl }}/concepts.html)
 
@@ -29,6 +29,9 @@ nav_exclude: true
 - [VAPO]({{ site.baseurl }}/topics/ai/vapo-value-based-augmented-ppo.html) — 基于价值的增强 PPO（字节）
 - [GSPO / SAPO]({{ site.baseurl }}/topics/ai/sapo-soft-adaptive-policy-optimization.html) — 群组采样 + 软自适应优化（阿里 Qwen）
 - [ARPO]({{ site.baseurl }}/topics/ai/arpo-agentic-reinforced-policy-optimization.html) — 面向 Agent 的增强策略优化
+
+### 模型架构
+- [MoE 混合专家模型详解]({{ site.baseurl }}/topics/ai/moe-mixture-of-experts.html) — 稀疏激活、路由机制、负载均衡、与 GRPO 的冲突
 
 ### 树搜索优化
 - [Tree-GRPO]({{ site.baseurl }}/topics/ai/tree-grpo-tree-based-policy-optimization.html) — 基于树搜索的策略优化：CATPO、IB-TPO、InfoTree、ATPO
